@@ -13,7 +13,7 @@
   </head>
   <body>
     <!-- Header -->
-    <?php include 'header.php'; ?>
+    @include('includes.header')
 
     <section class="main-section">
       <img src="img/dash.png" alt="Fresh and Tasty" class="main-image" draggable="false"/>
