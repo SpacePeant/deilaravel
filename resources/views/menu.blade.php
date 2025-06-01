@@ -23,10 +23,10 @@
 </div>
 
 <div class="menu">
-  <a href="Energi-Pagi.php" class="food-box">
+  <a href="{{ url('/Energi-Pagi') }}" class="food-box">
     <div class="menu-card">
       <div class="circle-image">
-        <img src="Smarteats for Kids/Energi-Pagi.png" alt="paket lunch hero" />
+        <img src="{{ asset('images/Energi-Pagi.png') }}" alt="paket lunch hero" />
       </div>
       <div class="menu-details">
         <h3>Energi Pagi</h3>
@@ -36,10 +36,10 @@
     </div>
   </a>
 
-  <a href="Lunch-Hero.php" class="food-box">
+  <a href="{{ url('/Lunch-Hero') }}" class="food-box">
     <div class="menu-card">
       <div class="circle-image">
-        <img src="Smarteats for Kids/Lunch-Hero.png" alt="paket lunch hero" />
+        <img src="{{ asset('images/Lunch-Hero.png') }}" alt="paket lunch hero" />
       </div>
       <div class="menu-details">
         <h3>Lunch Hero</h3>
@@ -49,10 +49,10 @@
     </div>
   </a>
 
-  <a href="Jajan-sehat.php" class="food-box">
+  <a href="{{ url('/Jajan-sehat') }}" class="food-box">
     <div class="menu-card">
       <div class="circle-image">
-        <img src="Smarteats for Kids/Jajan-Sehat.png" alt="paket lunch hero" />
+        <img src="{{ asset('images/Jajan-Sehat.png') }}" alt="paket lunch hero" />
       </div>
       <div class="menu-details">
         <h3>Jajan Sehat</h3>
@@ -62,10 +62,10 @@
     </div>
   </a>
 
-  <a href="Happy-Tummy.php" class="food-box">
+  <a href="{{ url('/Happy-Tummy') }}" class="food-box">
     <div class="menu-card">
       <div class="circle-image">
-        <img src="Smarteats for Kids/Happy-Tummy.png" alt="paket lunch hero" />
+        <img src="{{ asset('images/Happy-Tummy.png') }}" alt="paket lunch hero" />
       </div>
       <div class="menu-details">
         <h3>Happy Tummy</h3>
@@ -75,10 +75,10 @@
     </div>
   </a>
 
-  <a href="Nusantara-Mini.php" class="food-box">
+  <a href="{{ url('/Nusantara-Mini') }}" class="food-box">
     <div class="menu-card">
       <div class="circle-image">
-        <img src="Smarteats for Kids/Nusantara-Mini.png" alt="paket lunch hero" />
+        <img src="{{ asset('images/Nusantara-Mini.png') }}" alt="paket lunch hero" />
       </div>
       <div class="menu-details">
         <h3>Nusantara Mini</h3>
@@ -88,10 +88,10 @@
     </div>
   </a>
 
-  <a href="Western-Fun.php" class="food-box">
+  <a href="{{ url('/Western-Fun') }}" class="food-box">
     <div class="menu-card">
       <div class="circle-image">
-        <img src="Smarteats for Kids/Western-Fun.png" alt="paket lunch hero" />
+        <img src="{{ asset('images/Western-Fun.png') }}" alt="paket lunch hero" />
       </div>
       <div class="menu-details">
         <h3>Western Fun</h3>
@@ -101,10 +101,10 @@
     </div>
   </a>
 
-  <a href="Plant-Power.php" class="food-box">
+  <a href="{{ url('/Plant-Power') }}" class="food-box">
     <div class="menu-card">
       <div class="circle-image">
-        <img src="Smarteats for Kids/Plant-Power.png" alt="paket lunch hero" />
+        <img src="{{ asset('images/Plant-Power.png') }}" alt="paket lunch hero" />
       </div>
       <div class="menu-details">
         <h3>Plant Power</h3>

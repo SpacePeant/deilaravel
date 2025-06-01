@@ -6,11 +6,12 @@
   </div>
   <nav>
     <ul>
-      <li class="home"><a href="home.php">Home</a></li>
-      <li class="anak"><a href="anak.php">Anak</a></li>
-      <li class="menu"><a href="menu.php">Menu</a></li>
-      <li class="order"><a href="pilihanak.php">Order</a></li>
-      <li class="od"><a href="order_details.php">Order Details</a></li>
+      <li class="home"><a href="{{ route('home') }}">Home</a></li>
+      <li class="anak"><a href="{{ route('anak') }}">Anak</a></li>
+      <li class="menu"><a href="{{ route('menu') }}">Menu</a></li>
+      <li class="order"><a href="{{ route('pilihanak') }}">Order</a></li>
+      <li class="od"><a href="{{ route('order_details') }}">Order Details</a></li>
+
     </ul>
   </nav>
   <div style="display: flex; align-items: center; gap: 20px">
