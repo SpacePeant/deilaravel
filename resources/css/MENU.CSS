@@ -1,0 +1,233 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f8f8f8;
+  background-image: url(../Background\ Paket.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+h2 {
+  color: #738e2a;
+  font-size: 49px;
+  font-family: "Tangerine", cursive;
+}
+
+.backbutt button {
+  background-color: #4caf50; /* Green */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.backbutt button:hover {
+  background-color: #45a049;
+}
+
+.food-cart {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.food-cart h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 40px;
+  margin-top: 40px;
+}
+
+.food-box {
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+}
+
+.menu-card {
+  background: #738e2a;
+  border-radius: 20px;
+  padding: 60px 20px 20px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.menu-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.circle-image {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: absolute;
+  top: -60px;
+  background-color: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.circle-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.plate-image {
+  width: 170px;
+  height: 130px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plate-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.menu-details {
+  margin-top: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  width: 100%;
+  padding: 0 16px;
+}
+
+.menu-details .label {
+  font-size: 40px;
+  font-family: "Tangerine", cursive;
+  color: #fff;
+  background-color: #738e2a;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: lighter;
+  margin-bottom: px;
+}
+
+.food-cart h2 {
+  color: #456431;
+}
+
+.menu-details h3 {
+  font-size: 20px;
+  color: #fff;
+  font-weight: bold;
+  margin: 10px 0 6px;
+  text-decoration: none;
+}
+
+.menu-details p {
+  margin: 6px 0;
+  color: #fff;
+  font-family: "Poppins", Arial, sans-serif;
+}
+
+.menu-details button {
+  margin-top: 10px;
+  background-color: #fff;
+  color: #738e2a;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.menu-details button:hover {
+  background-color: #e6eccf;
+}
+
+.cart-icon {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  background: #ff4d4d;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  z-index: 1000;
+}
+
+.cart-icon span {
+  margin-left: 8px;
+}
+
+.cart-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 100vh;
+  background: #fff;
+  box-shadow: -3px 0 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  overflow-y: auto;
+  z-index: 999;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .menu {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .menu {
+    grid-template-columns: 1fr;
+  }
+}
+
+.btn-back {
+  padding: 10px 24px;
+  background-color: #4caf50; /* Hijau segar */
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-back:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+}
