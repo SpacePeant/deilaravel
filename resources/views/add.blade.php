@@ -1,17 +1,4 @@
 <?php
-// Koneksi ke database
-// Koneksi ke database MySQL
-$servername = "localhost";
-$username = "root";  // Ganti dengan username MySQL Anda
-$password = "MySQLISBUC2024Sean";      // Ganti dengan password MySQL Anda
-$dbname = "db_dei";  // Nama database
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Cek koneksi
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} // File ini harus berisi koneksi $conn = new mysqli(...);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $nama = $_POST['nama'];

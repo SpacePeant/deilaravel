@@ -1,16 +1,5 @@
 <?php
-// Koneksi ke database MySQL
-$servername = "localhost";
-$username = "root";  // Ganti dengan username MySQL Anda
-$password = "MySQLISBUC2024Sean";      // Ganti dengan password MySQL Anda
-$dbname = "db_dei";  // Nama database
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Cek koneksi
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
 if (!isset($_GET['id'])) {
   echo "<p>ID anak tidak ditemukan.</p>";

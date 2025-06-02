@@ -14,7 +14,7 @@ echo "<h2>Hari yang dipilih: " . htmlspecialchars($day) . "</h2>";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu Order</title>
-    <link rel="stylesheet" href="menu.css">
+    <link rel="stylesheet" href="{{ asset('css/MENU.css') }}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tangerine&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
