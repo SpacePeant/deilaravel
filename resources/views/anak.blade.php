@@ -3,10 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>Data Anak</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <script src="https://unpkg.com/feather-icons"></script>
     <style>
       .child-card {
@@ -45,30 +42,25 @@
     <div class="container py-5">
       <h2 class="mb-4">Data Anak</h2>
       <div class="row row-cols-1 row-cols-md-2 g-4" id="childList">
-        <?php
-        // Render data anak
-        foreach ($children as $child) {
-            $imgSrc = ($child['gender'] == 'L') ? 'imganak/cowok.png' : 'imganak/cewek.png';
-            echo '
-              <div class="col">
-                <a href="child.php?id=' . $child['id'] . '" class="text-decoration-none text-dark">
-                  <div class="card p-3 shadow-sm child-card">
-                    <div class="d-flex align-items-center">
-                      <img src="' . $imgSrc . '" alt="Foto Anak" class="child-img me-3" />
-                      <div>
-                        <h5 class="mb-1">' . $child['nama'] . '</h5>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            ';
-        }
-        ?>
+        @foreach ($children as $child)
+    <div class="col">
+      <a href="{{ route('anak.show', $child->id) }}" class="text-decoration-none text-dark">
+        <div class="card p-3 shadow-sm child-card">
+          <div class="d-flex align-items-center">
+            <img src="{{ asset($child->gender == 'L' ? 'images/cowok.png' : 'images/cewek.png') }}" class="child-img me-3" />
+            <div>
+              <h5 class="mb-1">{{ $child->nama }}</h5>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+@endforeach
+
 
         <!-- Tombol untuk menambah anak -->
         <div class="col">
-          <a href="add.php" class="text-decoration-none">
+          <a href="{{ route('add') }}" class="text-decoration-none">
             <div class="plus-card w-100 h-100">
               +
             </div>

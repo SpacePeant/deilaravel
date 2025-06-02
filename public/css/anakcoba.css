@@ -1,0 +1,38 @@
+/* anak.css */
+
+body {
+  background-color: #f8f9fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h2 {
+  color: #343a40;
+}
+
+.card {
+  border-radius: 1rem;
+  background-color: #ffffff;
+  border: none;
+}
+
+.child-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border: none;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border: none;
+}
+
+.btn:hover {
+  opacity: 0.9;
+  transition: 0.2s;
+}

@@ -23,12 +23,6 @@ if (isset($_GET['id'])) {
     // Proses ID anak di sini
     echo "Child ID: " . $childId;
 }
-
-$conn = new mysqli("localhost", "root", "MySQLISBUC2024Sean", "db_dei");
-if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
-}
-
 $days_of_week = ['senin', 'selasa', 'rabu', 'kamis', 'jumat'];
 
 // Query untuk mengambil data cart berdasarkan child_id yang dipilih
