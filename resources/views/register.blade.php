@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register</title>
-    <link rel="stylesheet" href="login.css" />
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
   </head>
   <body>
     <section>
@@ -27,7 +27,7 @@
             </div>
             <button type="submit">Register</button>
             <div class="register">
-              <p>Already have an account? <a href="login.html">Login</a></p>
+              <p>Already have an account? <a href="{{ route('login') }}">Login</a></p>
             </div>
           </form>
         </div>

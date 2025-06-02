@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Smarteats Menu</title>
-    <link rel="stylesheet" href="MENU.CSS" />
+    <link rel="stylesheet" href="{{ asset('css/MENU.css') }}">
     <script src="https://unpkg.com/feather-icons"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Tangerine&display=swap"
@@ -19,7 +19,8 @@
     <section class="food-cart">
       <h2>Paket Menu</h2>
       <div class="backbutt">
-  <button onclick="location.href='home.php'" class="btn-back">← Kembali</button>
+  <button onclick="location.href='{{ url('/home') }}'" class="btn-back">← Kembali</button>
+
 </div>
 
 <div class="menu">

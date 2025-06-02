@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AnakController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -13,8 +12,9 @@ Route::view('/home', 'home')->name('home');
 Route::view('/biodata', 'biodata')->name('biodata');
 
 // Anak page
-Route::get('/anak', [AnakController::class, 'index']);
-
+Route::get('/anak', function () {
+    return view('anak');
+})->name('anak');
 
 // Menu page
 Route::get('/menu', function () {

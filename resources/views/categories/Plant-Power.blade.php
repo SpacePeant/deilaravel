@@ -1,9 +1,4 @@
 <?php
-// Database connection and data fetching
-$conn = new mysqli("localhost", "root", "Bernardo1777*", "db_dei");
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
 // Fetch all menu items with categories
 $sql = "SELECT m.*, c.nama AS category_name 

@@ -19,7 +19,7 @@
       <img src="img/dash.png" alt="Fresh and Tasty" class="main-image" draggable="false"/>
     </section>
     <div class="butt">
-    <button class="cta-button" onclick="window.location.href='menu.php'">Lihat Sekarang</button>
+      <button onclick="location.href='{{ url('/menu') }}'" class="cta-button">Lihat Sekarang</button>
     </div>
     <div class="about">
       <img src="{{ asset('img/about.png') }}" alt="Smarteats Meal" draggable="false">
