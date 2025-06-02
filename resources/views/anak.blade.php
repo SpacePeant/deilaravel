@@ -1,6 +1,3 @@
-<?php 
-require_once 'db_connect.php';
-?>
 <!DOCTYPE html>
 <html lang="id">
   <head>
@@ -43,7 +40,7 @@ require_once 'db_connect.php';
     </style>
   </head>
   <body class="bg-light">
-    <?php include 'header.php'; ?>
+    @include('includes.header')
 
     <div class="container py-5">
       <h2 class="mb-4">Data Anak</h2>

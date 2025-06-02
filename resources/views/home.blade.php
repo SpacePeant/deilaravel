@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    @vite('resources/css/style.css')
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
       rel="stylesheet"
@@ -22,7 +22,7 @@
     <button class="cta-button" onclick="window.location.href='menu.php'">Lihat Sekarang</button>
     </div>
     <div class="about">
-      <img src="img/about.png" alt="Smarteats Meal" draggable="false"/>
+      <img src="{{ asset('img/about.png') }}" alt="Smarteats Meal" draggable="false">
       <div class="text-container">
         <h1>All About Smarteats for Kids</h1>
         <p>

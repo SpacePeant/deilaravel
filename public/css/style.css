@@ -547,3 +547,7 @@ footer i {
   background-color: #456431;
   transform: translateY(-3px);
 }
+
+#loginForm h2{
+  color: red;
+}
