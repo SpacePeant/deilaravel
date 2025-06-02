@@ -37,6 +37,6 @@ class MenuController extends Controller
         $categoriesWithMenus = Category::with('menus')->get();
 
         dd($categoriesWithMenus);
-        return view('grouped', compact('categoriesWithMenus')); // <--- Ensure this matches your file
+        return route('grouped', compact('categoriesWithMenus')); // <--- Ensure this matches your file
     }
 }
