@@ -53,3 +53,5 @@ Route::get('/pilihanak', [AnakController::class, 'pilih'])->name('anak.pilih');
 Route::get('/menu-order', [MenuController::class, 'index'])->name('order');
 
 Route::get('/order', [OrderController::class, 'index'])->name('order.show');
+
+Route::get('/full-grouped-menu', [MenuController::class, 'showGroupedMenu'])->name('grouped');
