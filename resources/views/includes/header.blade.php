@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
 <script src="https://unpkg.com/feather-icons"></script>
 <header id="mainHeader" class="transparent">
   <div class="logo">
