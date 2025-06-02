@@ -10,28 +10,33 @@ class MenuController extends Controller
 {
      public function index(Request $request)
     {
-        // Get the 'day' from the request, with a default value
         $day = $request->query('day', 'Tidak diketahui');
-
-        // Get the 'category_id' from the request.
-        // If "All Categories" is selected, the value will be empty, which resolves to falsey.
-        $selectedCategoryId = $request->query('category_id');
+        $selectedCategoryIdFromDropdown = $request->query('category_id'); // This is the INTEGER ID from the dropdown
 
         // Fetch all categories to populate the filter dropdown
         $categories = Category::all();
 
-        // Start building the query for pakets using your Menu model
+        // Start building the query for menu items
         $paketsQuery = Menu::query();
 
-        // Apply filter if a specific category_id is present and not empty
-        if ($selectedCategoryId) {
-            $paketsQuery->where('category_id', $selectedCategoryId);
+         if ($selectedCategoryIdFromDropdown) {
+            $selectedCategory = Category::find($selectedCategoryIdFromDropdown);
+            if ($selectedCategory) {
+                $paketsQuery->where('category_id', $selectedCategory->nama);
+            }
         }
 
-        // Fetch the filtered (or unfiltered if no category selected) pakets
+        // Fetch the filtered (or unfiltered) menu items
         $pakets = $paketsQuery->get();
 
-        // Pass all necessary data to the view
-        return view('order', compact('day', 'pakets', 'categories', 'selectedCategoryId'));
+        return view('order', compact('day', 'pakets', 'categories', 'selectedCategoryIdFromDropdown'));
+    }
+
+    public function showGroupedMenu()
+    {
+        $categoriesWithMenus = Category::with('menus')->get();
+
+        dd($categoriesWithMenus);
+        return view('grouped', compact('categoriesWithMenus')); // <--- Ensure this matches your file
     }
 }

@@ -20,7 +20,6 @@
         </div>
 
         {{-- <h2>Hari yang dipilih: {{ $day }}</h2> --}}
-    <h2>Paket Menu</h2>
 
     <div class="filter-section" style="margin-bottom: 20px;">
         <form action="{{ url()->current() }}" method="GET">
@@ -28,7 +27,7 @@
             <select name="category_id" id="category_filter" onchange="this.form.submit()">
                 <option value="">All Categories</option> @foreach ($categories as $category)
                     <option value="{{ $category->id }}"
-                        {{ $selectedCategoryId == $category->id ? 'selected' : '' }}>
+                        {{ $selectedCategoryIdFromDropdown == $category->id ? 'selected' : '' }}>
                         {{ $category->nama }} 
                     </option>
                 @endforeach
@@ -42,13 +41,14 @@
             <a href="{{ route('order.show', ['paket' => $paket->id, 'day' => $day]) }}" class="food-box">
                 <div class="menu-card">
                     <div class="circle-image">
-                        <img src="{{ asset($paket->gambar) }}" alt="{{ $paket->nama }}">
+                        <img src="{{ asset('images_makanan/' . $paket->gambar) }}" alt="{{ $paket->nama }}">
                     </div>
                     <div class="menu-details">
                         <span class="label">Paket</span>
                         <h3>{{ $paket->nama }}</h3>
                         <p>{{ $paket->deskripsi }}</p>
                         <button>Lihat Detail</button>
+                        
                     </div>
                 </div>
             </a>
