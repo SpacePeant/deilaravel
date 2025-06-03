@@ -9,20 +9,32 @@ use App\Models\Category; // Ensure this model exists and is correctly configured
 // Define the specific category name for this page
 $targetCategoryName = 'Energi Pagi'; // This string must exactly match the 'nama' column in your 'category' table for this category
 
+// --- DEBUGGING STEP 1: Dump the target category name ---
+// This confirms what string is being used in the query.
+// dd($targetCategoryName);
+
 // Find the category by its name and eager load all its associated menus
-// ->with('menus') ensures that related menu items are fetched efficiently
-// ->first() retrieves the first matching category (or null if not found)
 $category = Category::where('nama', $targetCategoryName)->with('menus')->first();
 
-// --- START FIX for Undefined variable $categoriesWithMenus ---
-// Instead of $menuByCategory, we now define $categoriesWithMenus as expected by the loop
-$categoriesWithMenus = collect(); // Initialize as an empty collection
+// --- DEBUGGING STEP 2: Dump the $category object ---
+// IMPORTANT: UNCOMMENT ONLY ONE dd() at a time.
+// If this dumps 'null', it means no category with `nama` 'Energi Pagi' was found.
+//    - Check for typos, leading/trailing spaces, or case sensitivity in your DB.
+// If this dumps a Category object but its 'menus' property is an empty collection,
+//    - It means the category was found, but no menus are linked to it, or the relationship is wrong.
+// dd($category);
 
+
+$categoriesWithMenus = collect(); // Initialize as an empty collection
 if ($category) {
     // If the category is found, add it to the collection
     $categoriesWithMenus->push($category);
 }
-// --- END FIX ---
+
+// --- DEBUGGING STEP 3: Dump the final $categoriesWithMenus collection ---
+// This shows what data will actually be passed to the Blade loops.
+// If this is an empty collection, your loops won't run, and the page will appear empty.
+// dd($categoriesWithMenus);
 
 // No need for explicit database connection closing (e.g., $conn->close()) as Laravel manages this.
 ?>
@@ -122,7 +134,6 @@ if ($category) {
         <h1 class="text-center mb-4">Our Menu</h1>
 
         {{-- Loop through categories with their associated menu items --}}
-        {{-- Now using the corrected $categoriesWithMenus variable --}}
         @foreach ($categoriesWithMenus as $category)
             {{-- Only display category title if it has menu items --}}
             @if ($category->menus->isNotEmpty())
@@ -134,8 +145,8 @@ if ($category) {
                             <div class="menu-item-card">
                                 {{-- Use asset() helper for images, assuming they are in public/images/ --}}
                                 <img src="{{ asset('images/' . $item->gambar) }}"
-                                    alt="{{ htmlspecialchars($item->nama) }}"
-                                    class="menu-item-img">
+                                     alt="{{ htmlspecialchars($item->nama) }}"
+                                     class="menu-item-img">
 
                                 <div class="menu-item-body">
                                     <h4>{{ htmlspecialchars($item->nama) }}</h4>
@@ -162,7 +173,7 @@ if ($category) {
                         </div>
 
                         <div class="modal fade" id="nutritionModal{{ $item->id }}" tabindex="-1"
-                            aria-labelledby="nutritionModalLabel{{ $item->id }}" aria-hidden="true">
+                             aria-labelledby="nutritionModalLabel{{ $item->id }}" aria-hidden="true">
                             <div class="modal-dialog modal-md">
                                 <div class="modal-content">
                                     <div class="modal-header">
