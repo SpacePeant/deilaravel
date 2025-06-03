@@ -51,6 +51,88 @@ class MenuController extends Controller
         return view('categories.Energi-Pagi', compact('categoriesWithMenus'));
     }
 
+    public function showHappyTummy()
+    {
+        $targetCategoryName = 'Happy Tummy';
+        $category = Category::where('nama', $targetCategoryName)->with('menus')->first();
+
+        $categoriesWithMenus = collect();
+        if ($category) {
+            $categoriesWithMenus->push($category);
+        }
+
+        return view('categories.Happy-Tummy', compact('categoriesWithMenus'));
+    }
+
+    // New method for Lunch Hero
+    public function showLunchHero()
+    {
+        $targetCategoryName = 'Lunch Hero';
+        $category = Category::where('nama', $targetCategoryName)->with('menus')->first();
+
+        $categoriesWithMenus = collect();
+        if ($category) {
+            $categoriesWithMenus->push($category);
+        }
+
+        return view('categories.Lunch-Hero', compact('categoriesWithMenus'));
+    }
+
+    // New method for Jajan Sehat
+    public function showJajanSehat()
+    {
+        $targetCategoryName = 'Jajan Sehat';
+        $category = Category::where('nama', $targetCategoryName)->with('menus')->first();
+
+        $categoriesWithMenus = collect();
+        if ($category) {
+            $categoriesWithMenus->push($category);
+        }
+
+        return view('categories.Jajan-sehat', compact('categoriesWithMenus'));
+    }
+
+    // New method for Nusantara Mini
+    public function showNusantaraMini()
+    {
+        $targetCategoryName = 'Nusantara Mini';
+        $category = Category::where('nama', $targetCategoryName)->with('menus')->first();
+
+        $categoriesWithMenus = collect();
+        if ($category) {
+            $categoriesWithMenus->push($category);
+        }
+
+        return view('categories.Nusantara-Mini', compact('categoriesWithMenus'));
+    }
+
+    // New method for Western Fun
+    public function showWesternFun()
+    {
+        $targetCategoryName = 'Western Fun';
+        $category = Category::where('nama', $targetCategoryName)->with('menus')->first();
+
+        $categoriesWithMenus = collect();
+        if ($category) {
+            $categoriesWithMenus->push($category);
+        }
+
+        return view('categories.Western-Fun', compact('categoriesWithMenus'));
+    }
+
+    // New method for Plant Power
+    public function showPlantPower()
+    {
+        $targetCategoryName = 'Plant Power';
+        $category = Category::where('nama', $targetCategoryName)->with('menus')->first();
+
+        $categoriesWithMenus = collect();
+        if ($category) {
+            $categoriesWithMenus->push($category);
+        }
+
+        return view('categories.Plant-Power', compact('categoriesWithMenus'));
+    }
 
 public function showMenuPage()
 {
