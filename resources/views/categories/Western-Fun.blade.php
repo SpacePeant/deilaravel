@@ -1,35 +1,9 @@
-<?php
-
-
-// Fetch all menu items with categories
-$sql = "SELECT m.*, c.nama AS category_name 
-        FROM menu m
-        JOIN category c ON m.category_id = c.id
-        WHERE m.category_id = 'western_fun'
-        ORDER BY c.id, m.id";
-$result = $conn->query($sql);
-
-// Group by category
-$menuByCategory = [];
-while ($row = $result->fetch_assoc()) {
-    $category = $row['category_id'];
-    if (!isset($menuByCategory[$category])) {
-        $menuByCategory[$category] = [
-            'category_name' => $row['category_name'],
-            'items' => []
-        ];
-    }
-    $menuByCategory[$category]['items'][] = $row;
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu with Nutrition Facts</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         /* Menu Item Styling */
@@ -118,104 +92,103 @@ while ($row = $result->fetch_assoc()) {
     <div class="container py-4">
         <h1 class="text-center mb-4">Our Menu</h1>
         
-        <?php foreach ($menuByCategory as $categoryId => $categoryData): ?>
-            <h2 class="category-title"><?= htmlspecialchars($categoryData['category_name']) ?></h2>
-            
-            <div class="row">
-                <?php foreach ($categoryData['items'] as $item): ?>
-                    <div class="col-md-4 mb-4">
-                        <div class="menu-item-card">
-                            <img src="images/<?= htmlspecialchars($item['gambar']) ?>" 
-                                 alt="<?= htmlspecialchars($item['nama']) ?>" 
-                                 class="menu-item-img">
-                            
-                            <div class="menu-item-body">
-                                <h4><?= htmlspecialchars($item['nama']) ?></h4>
-                                <p class="text-muted"><?= htmlspecialchars($item['deskripsi']) ?></p>
+        @foreach ($categoriesWithMenus as $category)
+            @if ($category->menus->isNotEmpty())
+                <h2 class="category-title">{{ htmlspecialchars($category->nama) }}</h2>
+                <div class="row">
+                    @foreach ($category->menus as $item)
+                        <div class="col-md-4 mb-4">
+                            <div class="menu-item-card">
+                                <img src="{{ asset('images/' . $item->gambar) }}" 
+                                     alt="{{ htmlspecialchars($item->nama) }}" 
+                                     class="menu-item-img">
                                 
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <h5 class="mb-0">Rp <?= number_format($item['harga'], 0, ',', '.') ?></h5>
-                                    <button class="btn btn-sm btn-outline-primary"
-                                            data-bs-toggle="modal" 
-                                            data-bs-target="#nutritionModal<?= $item['id'] ?>">
-                                        Nutrition Facts
-                                    </button>
-                                </div>
-                                
-                                <div class="nutrition-badges">
-                                    <span class="nutrition-badge"><?= $item['kalori'] ?> kcal</span>
-                                    <span class="nutrition-badge"><?= $item['protein'] ?>g protein</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Nutrition Modal for this item -->
-                    <div class="modal fade" id="nutritionModal<?= $item['id'] ?>" tabindex="-1" 
-                         aria-labelledby="nutritionModalLabel<?= $item['id'] ?>" aria-hidden="true">
-                        <div class="modal-dialog modal-md">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="nutritionModalLabel<?= $item['id'] ?>">
-                                        Nutrition Facts: <?= htmlspecialchars($item['nama']) ?>
-                                    </h5>
-                                    <button type="button" class="btn-close btn-close-white" 
-                                            data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                
-                                <div class="modal-body">
-                                    <h6>Description</h6>
-                                    <p><?= htmlspecialchars($item['deskripsi']) ?></p>
+                                <div class="menu-item-body">
+                                    <h4>{{ htmlspecialchars($item->nama) }}</h4>
+                                    <p class="text-muted">{{ htmlspecialchars($item->deskripsi) }}</p>
                                     
-                                    <table class="table nutrition-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Nutrition Component</th>
-                                                <th>Amount (per serving)</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Calories</td>
-                                                <td><?= $item['kalori'] ?> kcal</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Carbohydrates</td>
-                                                <td><?= $item['karbohidrat'] ?>g</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Protein</td>
-                                                <td><?= $item['protein'] ?>g</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Sodium</td>
-                                                <td><?= $item['sodium'] ?>mg</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Sugar</td>
-                                                <td><?= $item['gula'] ?>g</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h5 class="mb-0">Rp {{ number_format($item->harga ?? 0, 0, ',', '.') }}</h5>
+                                        <button class="btn btn-sm btn-outline-primary"
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#nutritionModal{{ $item->id }}">
+                                            Nutrition Facts
+                                        </button>
+                                    </div>
                                     
-                                    <div class="text-center mt-3">
-                                        <small class="text-muted">* Percent Daily Values are based on a 2000 calorie diet</small>
+                                    <div class="nutrition-badges">
+                                        <span class="nutrition-badge">{{ $item->kalori ?? 0 }} kcal</span>
+                                        <span class="nutrition-badge">{{ $item->protein ?? 0 }}g protein</span>
                                     </div>
                                 </div>
-                                
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" 
-                                            data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                        
+                        <div class="modal fade" id="nutritionModal{{ $item->id }}" tabindex="-1" 
+                             aria-labelledby="nutritionModalLabel{{ $item->id }}" aria-hidden="true">
+                            <div class="modal-dialog modal-md">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="nutritionModalLabel{{ $item->id }}">
+                                            Nutrition Facts: {{ htmlspecialchars($item->nama) }}
+                                        </h5>
+                                        <button type="button" class="btn-close btn-close-white" 
+                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    
+                                    <div class="modal-body">
+                                        <h6>Description</h6>
+                                        <p>{{ htmlspecialchars($item->deskripsi) }}</p>
+                                        
+                                        <table class="table nutrition-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nutrition Component</th>
+                                                    <th>Amount (per serving)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Calories</td>
+                                                    <td>{{ $item->kalori ?? 0 }} kcal</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Carbohydrates</td>
+                                                    <td>{{ $item->karbohidrat ?? 0 }}g</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Protein</td>
+                                                    <td>{{ $item->protein ?? 0 }}g</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Sodium</td>
+                                                    <td>{{ $item->sodium ?? 0 }}mg</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Sugar</td>
+                                                    <td>{{ $item->gula ?? 0 }}g</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        
+                                        <div class="text-center mt-3">
+                                            <small class="text-muted">* Percent Daily Values are based on a 2000 calorie diet</small>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" 
+                                                data-bs-dismiss="modal">Close</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        <?php endforeach; ?>
+                    @endforeach
+                </div>
+            @endif
+        @endforeach
     </div>
 
-    <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

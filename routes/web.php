@@ -38,13 +38,14 @@ Route::get('/pilihanak', function () {
 // Order Details page
 Route::get('/order_details', function () {return view('order_details');})->name('order_details');
 
-Route::view('/Energi-Pagi', 'categories.Energi-Pagi');
-Route::view('/Lunch-Hero', 'categories.Lunch-Hero');
-Route::view('/Jajan-sehat', 'categories.Jajan-sehat');
-Route::view('/Happy-Tummy', 'categories.Happy-Tummy');
-Route::view('/Nusantara-Mini', 'categories.Nusantara-Mini');
-Route::view('/Western-Fun', 'categories.Western-Fun');
-Route::view('/Plant-Power', 'categories.Plant-Power');
+Route::get('/Energi-Pagi', [MenuController::class, 'showEnergiPagi']);
+Route::get('/Lunch-Hero', [MenuController::class, 'showLunchHero']); // New route
+Route::get('/Jajan-sehat', [MenuController::class, 'showJajanSehat']); // New route
+Route::get('/Happy-Tummy', [MenuController::class, 'showHappyTummy']); // New route
+Route::get('/Nusantara-Mini', [MenuController::class, 'showNusantaraMini']); // New route
+Route::get('/Western-Fun', [MenuController::class, 'showWesternFun']); // New route
+Route::get('/Plant-Power', [MenuController::class, 'showPlantPower']); // New route
+
 
 Route::get('/add', [AnakController::class, 'add'])->name('add');
 
@@ -54,7 +55,10 @@ Route::get('/pilihanak', [AnakController::class, 'pilih'])->name('anak.pilih');
 
 // Route::get('/order', [OrderController::class, 'index'])->name('order.show');
 
-Route::get('/full-grouped-menu', [MenuController::class, 'showGroupedMenu'])->name('grouped');
+
+Route::get('/filterMenu', function () { return view('get_cart'); })->name('filterMenu');
+
+Route::get('/menu/{categoryName}', [MenuController::class, 'showCategoryMenus'])->name('menu.category');
 
 // Route::get('/order', [OrderController::class, 'showMenu'])->name('order.show');
 

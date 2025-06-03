@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -91,22 +93,25 @@
 
     <div class="container py-4">
         <h1 class="text-center mb-4">Our Menu</h1>
-        
+
         {{-- Loop through categories with their associated menu items --}}
         @foreach ($categoriesWithMenus as $category)
+         
             {{-- Only display category title if it has menu items --}}
             @if ($category->menus->isNotEmpty())
+             
                 <h2 class="category-title">{{ htmlspecialchars($category->nama) }}</h2>
-
+                
                 <div class="row">
                     @foreach ($category->menus as $item)
                         <div class="col-md-4 mb-4">
                             <div class="menu-item-card">
                                 {{-- Use asset() helper for images, assuming they are in public/images/ --}}
                                 <img src="{{ asset('images/' . $item->gambar) }}"
-                                    alt="{{ htmlspecialchars($item->nama) }}"
-                                    class="menu-item-img">
-
+                                     alt="{{ htmlspecialchars($item->nama) }}"
+                                     class="menu-item-img">
+                                     <?php echo("tai"); ?>
+                                
                                 <div class="menu-item-body">
                                     <h4>{{ htmlspecialchars($item->nama) }}</h4>
                                     <p class="text-muted">{{ htmlspecialchars($item->deskripsi) }}</p>
@@ -132,7 +137,7 @@
                         </div>
 
                         <div class="modal fade" id="nutritionModal{{ $item->id }}" tabindex="-1"
-                            aria-labelledby="nutritionModalLabel{{ $item->id }}" aria-hidden="true">
+                             aria-labelledby="nutritionModalLabel{{ $item->id }}" aria-hidden="true">
                             <div class="modal-dialog modal-md">
                                 <div class="modal-content">
                                     <div class="modal-header">

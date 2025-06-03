@@ -25,17 +25,17 @@
 
 <div class="menu">
   <a href="{{ url('/Energi-Pagi') }}" class="food-box">
-    <div class="menu-card">
-      <div class="circle-image">
-        <img src="{{ asset('images/Energi-Pagi.png') }}" alt="paket lunch hero" />
-      </div>
-      <div class="menu-details">
-        <h3>Energi Pagi</h3>
-        <p>Untuk sarapan bergizi & penuh tenaga</p>
-        <button>Lihat Detail</button>
-      </div>
-    </div>
-  </a>
+          <div class="menu-card">
+            <div class="circle-image">
+              <img src="{{ asset('images/Energi-Pagi.png') }}" alt="Paket Energi Pagi" />
+            </div>
+            <div class="menu-details">
+              <h3>Energi Pagi</h3>
+              <p>Untuk sarapan bergizi & penuh tenaga</p>
+              <button>Lihat Detail</button>
+            </div>
+          </div>
+        </a>
 
   <a href="{{ url('/Lunch-Hero') }}" class="food-box">
     <div class="menu-card">
