@@ -1,113 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login</title>
-  {{-- @vite('resources/css/login2.css') --}}
-  <link rel="stylesheet" href="{{ asset('css/login.css') }}">
-</head>
-<body>
-  <section>
-    <div class="form-box">
-      <div class="form-value">
-        <form id="loginForm">
-          <h2>Login</h2>
-          <div class="inputbox">
-            <ion-icon name="mail-outline"></ion-icon>
-            <input type="email" id="email" required />
-            <label>Email</label>
-          </div>
-          <div class="inputbox">
-            <ion-icon name="lock-closed-outline"></ion-icon>
-            <input type="password" id="password" required />
-            <label>Password</label>
-          </div>
-          <div class="forget">
-            <label><input type="checkbox" /> Remember me</label>
-            <label><a href="#">Forgot password?</a></label>
-          </div>
-          <button type="submit">Log in</button>
-          <div class="register">
-            <p>Don't have an account? <a href="{{ url('/register') }}">Register</a></p>
-          </div>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-  <script>
-    const homeUrl = "{{ route('home') }}";
-    const biodataUrl = "{{ url('/biodata') }}";
-
-    if (!localStorage.getItem("users")) {
-      let users = [
-        {
-          email: "ber@gmail.com",
-          password: "ber123",
-          nama: "Bernard",
-          telepon: "082247947700",
-          alamat: "Universitas Ciputra",
-        },
-      ];
-      localStorage.setItem("users", JSON.stringify(users));
-    }
-
-    document.getElementById("loginForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
-
-      const users = JSON.parse(localStorage.getItem("users")) || [];
-      const user = users.find(u => u.email === email && u.password === password);
-
-      if (user) {
-        alert("Login berhasil!");
-        sessionStorage.setItem("currentUser", JSON.stringify(user));
-
-        if (!user.nama || !user.telepon || !user.alamat) {
-          window.location.href = biodataUrl;
-        } else {
-          window.location.href = homeUrl;
-        }
-      } else {
-        alert("Email atau password salah!");
-      }
-    });
-  </script>
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{{-- <!DOCTYPE html>
-<html lang="en">
-<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    
-
-
 
     <style>
       body {
@@ -153,7 +50,6 @@ a{
 }
 
 .menu-container {
-    display: none;
     margin-top: 16px;
 }
 
@@ -319,72 +215,226 @@ h2{
     cursor: pointer;
 }
 
-.popup {
-        display: none; /* Hidden by default */
-        position: fixed;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 1000;
-    }
-    
-    /* Popup Content */
-    .popup-content {
-        position: relative;
-        background-color: white;
-        width: 300px;
-        margin: 15% auto;
-        padding: 20px;
-        text-align: center;
-        border-radius: 10px;
-    }
-    
-    /* Close Button */
-    .close {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        font-size: 30px;
-        color: #000;
-        cursor: pointer;
-    }
-    
-    /* Popup Icon */
-    .popup-icon {
-        width: 40px;
-        height: 40px;
-        margin-bottom: 20px;
-    }
-    
-    /* Popup Message */
-    .popup-message {
-        font-size: 18px;
-        color: #333;
+.container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
     }
 
-    .container{
-        margin-bottom: 80px;
+    h2 {
+      margin-bottom: 20px;
     }
-    .empty-message {
-        display: flex;
-        justify-content: center;
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .payment-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 2px solid #e0e0e0;
+      padding: 12px;
+      border-radius: 10px;
+      background-color: #fff;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .payment-option:hover {
+      border-color: #007bff;
+      box-shadow: 0 2px 8px rgba(0, 123, 255, 0.1);
+    }
+
+    .payment-option input[type="radio"] {
+      accent-color: #007bff;
+      width: 18px;
+      height: 18px;
+    }
+
+    .payment-option img {
+      width: 40px;
+      height: 40px;
+      background-color: #eaeaea;
+      border-radius: 6px;
+      object-fit: contain;
+    }
+
+    .payment-option span {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .summary-card {
+    background: linear-gradient(135deg, #ffffff, #f1f3f5);
+    border-radius: 16px;
+    padding: 25px 30px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .summary-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+  }
+
+  .summary-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+  }
+
+  .summary-text {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 10px;
+  }
+
+  .summary-total {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #28a745;
+  }
+
+  #pem{
+    margin-bottom: 50px;
+    margin-top: 80px;
+    background-color: #ffffff;
+    padding: 12px;
+    border-radius: 8px;
+  }
+
+.checkout-button:hover {
+    background-color: #218838;
+}
+
+/* Pop-up Styling */
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    text-align: center;
+    width: 300px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.checkmark {
+    font-size: 50px;
+    color: green;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: green;
+    font-size: 24px;
+    margin: 10px 0;
+}
+
+p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.popup-buttons {
+    margin: 30px 0;
+    display: flex;
+}
+
+.see-order-details, .back-home {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+.see-order-details:hover, .back-home:hover {
+    background-color: #0056b3;
+}
+
+.close-popup {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.close-popup:hover {
+    background-color: #c82333;
+}
+
+.tes{
+    margin-bottom: 100px;
+}
+.back-button {
+      display: inline-block;
+      background-color: #28a745;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 6px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      margin: 20px;
+      transition: background-color 0.3s ease;
+    }
+
+    .back-button:hover {
+      background-color: #218838;
+    }
+    #successPopup{
         align-items: center;
-        height: 300px; /* Atur tinggi sesuai kebutuhan */
-        font-size: 1.5rem;
-        color: #555;
-        font-weight: 600;
+        justify-content: center;
     }
-    .checkout-button.disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+    .popup {
+    display: none; /* Hide by default */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark background to dim the screen */
+    width: 100%;
+    height: 100%;
+}
+
+.popup-content {
+    position: relative;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
 }
     </style>
 </head>
 <body>
     @include('includes.header')
-    <div class="container">
+    <div class="containerr">
     @if (empty($groupedCart) || count($groupedCart) === 0)
         <div class="empty-message">
             Belum ada pesanan.
@@ -398,16 +448,15 @@ h2{
                     <div class="day-header">
                         <h3>
                             {{ ucfirst($hari) }}
-                            <span id="total-kalori-hari-ini-{{$anak}}-{{ strtolower($hari) }}">
-    {{ $groupedCart[$anak][$hari]['kalori_total'] ?? 0 }} / {{ $groupedCart[$anak][$hari]['kalori_ideal'] ?? 0 }} Kalori
-</span>
+                            <span id="total-kalori-hari-ini-{{ $anak }}-{{ $hari }}">
+                                {{ $kalori_per_hari[$anak][$hari] ?? 0 }} / {{ round($kalori_ideal[$anak] ?? 0) }} Kalori
+                            </span>
                         </h3>
-                        <button class="lihat-detail" data-day="{{ $anak }}-{{ $hari }}">Lihat Detail</button>
                     </div>
 
-                    <div class="menu-container" id="detail-{{ $anak }}-{{ $hari }}" style="display:none;">
+                    <div class="menu-container" id="detail-{{ $anak }}-{{ $hari }}">
                         @if (!empty($menus))
-                            @foreach ($groupedCart[$anak][$hari]['menus'] as $menu)
+                            @foreach ($menus as $menu)
                                 @php
                                     $options = is_array($menu['options']) ? $menu['options'] : json_decode($menu['options'], true) ?? [];
                                 @endphp
@@ -440,9 +489,7 @@ h2{
                                         @endif
 
                                         <div class="quantity-control">
-                                            <button class="qty-btn minus" data-cart-id="{{ $menu['cart_id'] }}">−</button>
-                                            <span class="qty" id="qty-{{ $menu['cart_id'] }}">{{ $menu['quantity'] }}</span>
-                                            <button class="qty-btn plus" data-cart-id="{{ $menu['cart_id'] }}">+</button>
+                                                                                        <span class="qty" id="qty-{{ $menu['cart_id'] }}">{{ $menu['quantity'] }}x</span>
                                         </div>
 
                                     </div>
@@ -458,13 +505,73 @@ h2{
         @endforeach
     @endif
 
-    <div class="checkout-bar">
-        <div class="checkout-content">
-            <span class="total-label">Total:</span>
-            <span id="totalAmount">Rp {{ $totalHarga }}</span>
-            <button class="checkout-button" onclick="checkout()">Checkout Payment</button>
+    <div class="container mt-4" id="pem">
+    <div class="summary-card">
+        <div class="summary-title">Ringkasan Pembayaran</div>
+        <div class="summary-text">Total yang harus dibayar:</div>
+        <div class="summary-total">
+            <span id="totalAmount">Rp {{ number_format($totalHarga ?? 0, 0, ',', '.') }}</span>
         </div>
     </div>
+</div>
+</div>
+<div class="checkout-bar">
+    <div class="checkout-content">
+        <span class="total-label">Total:</span>
+        <span id="totalAmount">Rp {{ number_format($totalHarga ?? 0, 0, ',', '.') }}</span>
+        <button class="checkout-button" form="paymentForm" type="submit">
+            Bayar Sekarang
+        </button>
+    </div>
+</div>
+
+<!-- Success Pop-up -->
+<div id="successPopup" class="popup" style="display:none;">
+    <div class="popup-content">
+        <span class="checkmark">&#10004;</span>
+        <h2>Order Berhasil!</h2>
+        <p>Terima kasih telah berbelanja!</p>
+        <div class="popup-buttons">
+            {{-- <a href="{{ route('order.details') }}" class="see-order-details btn btn-primary">Lihat Rincian Pesanan</a>
+            <a href="{{ route('home') }}" class="back-home btn btn-secondary">Kembali ke Beranda</a> --}}
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <h2>Pilih Metode Pembayaran</h2>
+        <form id="paymentForm" action="{{ route('checkout.all') }}" method="POST">
+        @csrf
+        <div class="grid">
+
+            @php
+                $payments = [
+                    ['value' => 'bca', 'img' => 'pay/BCA1.png', 'name' => 'Bank BCA'],
+                    ['value' => 'mandiri', 'img' => 'pay/logo-mandiri.png', 'name' => 'Bank Mandiri'],
+                    ['value' => 'bri', 'img' => 'pay/BRI1.png', 'name' => 'Bank BRI'],
+                    ['value' => 'bni', 'img' => 'pay/BNI1.png', 'name' => 'Bank BNI'],
+                    ['value' => 'qris', 'img' => 'pay/QRIS1.png', 'name' => 'QRIS'],
+                    ['value' => 'shopeepay', 'img' => 'pay/Shopeepay1.png', 'name' => 'ShopeePay'],
+                    ['value' => 'gopay', 'img' => 'pay/gopay.png', 'name' => 'GoPay'],
+                    ['value' => 'ovo', 'img' => 'pay/OVO1.png', 'name' => 'OVO'],
+                    ['value' => 'dana', 'img' => 'pay/dana1.png', 'name' => 'Dana'],
+                ];
+            @endphp
+
+            @foreach ($payments as $index => $payment)
+                <label class="payment-option">
+                    <input 
+                        type="radio" 
+                        name="payment_method" 
+                        value="{{ $payment['value'] }}" 
+                        {{ $index === 0 ? 'checked' : '' }}>
+                    <img src="{{ asset($payment['img']) }}" alt="{{ $payment['name'] }}">
+                    <span>{{ $payment['name'] }}</span>
+                </label>
+            @endforeach
+
+        </div>
+    </form>
 </div>
 
 {{-- Jangan lupa script JS, bisa kamu pindahkan ke file .js --}}
@@ -507,9 +614,8 @@ updateCheckoutButton();
             return false;
         }
 
-        let paymentUrl = '{{ route("checkout") }}' + '?id=' + childId + '&name=' + encodeURIComponent(childName);
-window.location.href = paymentUrl;
-
+        let paymentUrl = '{{ url('payment') }}' + '?id=' + childId + '&name=' + encodeURIComponent(childName);
+        window.location.href = paymentUrl;
     }
 </script>
 
@@ -591,10 +697,6 @@ hapusAnakJikaHariKosong();
             // Format harga pakai toLocaleString Indonesia
             totalAmountSpan.textContent = 'Rp ' + Number(data.totalHarga).toLocaleString('id-ID');
         }
-           const kaloriSpan = document.getElementById(`total-kalori-hari-ini-${data.anakId}-${data.hari.toLowerCase()}`);
-if (kaloriSpan) {
-    kaloriSpan.textContent = `${data.kaloriTotal} / ${data.kalori_ideal} Kalori`;
-}
             } else {
                 alert('Gagal update quantity: ' + (data.message || 'Unknown error'));
             }
@@ -621,7 +723,8 @@ if (kaloriSpan) {
         });
     });
 });
+
 </script>
 
 </body>
-</html> --}}
+</html>

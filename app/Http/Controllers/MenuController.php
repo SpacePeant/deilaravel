@@ -29,7 +29,7 @@ class MenuController extends Controller
         // Fetch the filtered (or unfiltered) menu items
         $pakets = $paketsQuery->get();
 
-        return view('order', compact('day', 'pakets', 'categories', 'selectedCategoryIdFromDropdown'));
+        return view('get_cart', compact('day', 'pakets', 'categories', 'selectedCategoryIdFromDropdown'));
     }
 
     public function showGroupedMenu()

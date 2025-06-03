@@ -9,15 +9,15 @@
       <li class="home"><a href="{{ route('home') }}">Home</a></li>
       <li class="anak"><a href="{{ route('anak') }}">Anak</a></li>
       <li class="menu"><a href="{{ route('menu') }}">Menu</a></li>
-      <li class="order"><a href="{{ route('filterMenu') }}">Order</a></li>
+      <li class="order"><a href="{{ route('order') }}">Order</a></li>
       <li class="od"><a href="{{ route('order_details') }}">Order Details</a></li>
-
     </ul>
   </nav>
   <div style="display: flex; align-items: center; gap: 20px">
     <button class="contact-button">Contact Us →</button>
+    
     <div class="icon">
-
+<a href="{{ route('cart') }}" id=""><i data-feather="shopping-cart"></i></a>
       <div class="user-dropdown">
         <a href="#" id="userIcon"><i data-feather="user"></i></a>
         <div class="user-dropdown-menu" id="userDropdown">

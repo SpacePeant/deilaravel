@@ -15,6 +15,10 @@ class Anak extends Model
     'tinggi_cm',
     'berat_kg',
     'alergi',
-];
 
+];
+public function carts()
+    {
+        return $this->hasMany(Cart::class, 'child_id');
+    }
 }

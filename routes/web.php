@@ -26,7 +26,7 @@ Route::post('/anak', [AnakController::class, 'store'])->name('anak.store');
 
 
 // Menu page
-Route::get('/menu', function () {
+Route::get('/listmenu', function () {
     return view('menu');
 })->name('menu');
 
@@ -50,8 +50,21 @@ Route::get('/add', [AnakController::class, 'add'])->name('add');
 
 Route::get('/pilihanak', [AnakController::class, 'pilih'])->name('anak.pilih');
 
-Route::get('/menu-order', [MenuController::class, 'index'])->name('order');
 
-Route::get('/order', [OrderController::class, 'index'])->name('order.show');
+
+// Route::get('/order', [OrderController::class, 'index'])->name('order.show');
 
 Route::get('/full-grouped-menu', [MenuController::class, 'showGroupedMenu'])->name('grouped');
+
+// Route::get('/order', [OrderController::class, 'showMenu'])->name('order.show');
+
+Route::post('/order/add', [OrderController::class, 'add'])->name('order.add');
+Route::get('/menu', [OrderController::class, 'index'])->name('order');
+
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
+
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
+Route::post('/cart/update-quantity', [CartController::class, 'updateQuantity']);
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+Route::post('/checkout-all', [CheckoutController::class, 'checkoutAll'])->name('checkout.all');
