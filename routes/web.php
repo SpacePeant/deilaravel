@@ -38,7 +38,8 @@ Route::get('/pilihanak', function () {
 // Order Details page
 Route::get('/order_details', function () {return view('order_details');})->name('order_details');
 
-Route::view('/Energi-Pagi', 'categories.Energi-Pagi');
+// Route::get('/Energi-Pagi', [MenuController::class, 'showEnergiPagi']);
+Route::get('/Energi-Pagi', [MenuController::class, 'showMenuPage']);
 Route::view('/Lunch-Hero', 'categories.Lunch-Hero');
 Route::view('/Jajan-sehat', 'categories.Jajan-sehat');
 Route::view('/Happy-Tummy', 'categories.Happy-Tummy');

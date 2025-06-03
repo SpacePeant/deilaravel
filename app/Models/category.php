@@ -6,19 +6,26 @@ use Illuminate\Database\Eloquent\Model;
 
 class category extends Model
 {
-     protected $table = 'category';
+      protected $table = 'category';
 
-    // Define the relationship: A Category has many Menus
+    // Tell Laravel that the primary key is not an integer auto-incrementing ID
+    protected $primaryKey = 'id';
+    public $incrementing = false;
+    protected $keyType = 'string';
+
+    // Correct menus relationship: foreign key in menu table is 'category_id',
+    // and it matches the 'id' (string primary key) in this category table.
     public function menus()
     {
-        return $this->hasMany(Menu::class, 'category_id', 'id'); // 'category_id' is the foreign key in 'menu' table, 'id' is local key in 'category'
+        return $this->hasMany(Menu::class, 'category_id', 'id');
     }
 
-    // This method seems like a self-referencing relationship.
-    // If not intended for sub-categories, it might be extraneous.
+    // Keep this if it's for self-referencing categories, otherwise it can be removed
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
+
+    
 
 }

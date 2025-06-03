@@ -1,43 +1,4 @@
-<?php
-// This PHP block is necessary here because Route::view directly renders this file.
-// In a typical Laravel MVC architecture, all database logic would reside in a dedicated controller method.
 
-// Use Laravel's Eloquent models to fetch data
-use App\Models\Menu;     // Ensure this model exists and is correctly configured for your 'menu' table
-use App\Models\Category; // Ensure this model exists and is correctly configured for your 'category' table
-
-// Define the specific category name for this page
-$targetCategoryName = 'Energi Pagi'; // This string must exactly match the 'nama' column in your 'category' table for this category
-
-// --- DEBUGGING STEP 1: Dump the target category name ---
-// This confirms what string is being used in the query.
-// dd($targetCategoryName);
-
-// Find the category by its name and eager load all its associated menus
-$category = Category::where('nama', $targetCategoryName)->with('menus')->first();
-
-// --- DEBUGGING STEP 2: Dump the $category object ---
-// IMPORTANT: UNCOMMENT ONLY ONE dd() at a time.
-// If this dumps 'null', it means no category with `nama` 'Energi Pagi' was found.
-//    - Check for typos, leading/trailing spaces, or case sensitivity in your DB.
-// If this dumps a Category object but its 'menus' property is an empty collection,
-//    - It means the category was found, but no menus are linked to it, or the relationship is wrong.
-// dd($category);
-
-
-$categoriesWithMenus = collect(); // Initialize as an empty collection
-if ($category) {
-    // If the category is found, add it to the collection
-    $categoriesWithMenus->push($category);
-}
-
-// --- DEBUGGING STEP 3: Dump the final $categoriesWithMenus collection ---
-// This shows what data will actually be passed to the Blade loops.
-// If this is an empty collection, your loops won't run, and the page will appear empty.
-// dd($categoriesWithMenus);
-
-// No need for explicit database connection closing (e.g., $conn->close()) as Laravel manages this.
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -135,10 +96,12 @@ if ($category) {
 
         {{-- Loop through categories with their associated menu items --}}
         @foreach ($categoriesWithMenus as $category)
+         <?php echo("tai1s"); ?>
             {{-- Only display category title if it has menu items --}}
             @if ($category->menus->isNotEmpty())
+             <?php echo("tai2"); ?>
                 <h2 class="category-title">{{ htmlspecialchars($category->nama) }}</h2>
-
+                
                 <div class="row">
                     @foreach ($category->menus as $item)
                         <div class="col-md-4 mb-4">
@@ -147,7 +110,8 @@ if ($category) {
                                 <img src="{{ asset('images/' . $item->gambar) }}"
                                      alt="{{ htmlspecialchars($item->nama) }}"
                                      class="menu-item-img">
-
+                                     <?php echo("tai"); ?>
+                                
                                 <div class="menu-item-body">
                                     <h4>{{ htmlspecialchars($item->nama) }}</h4>
                                     <p class="text-muted">{{ htmlspecialchars($item->deskripsi) }}</p>

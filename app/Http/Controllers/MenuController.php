@@ -22,7 +22,7 @@ class MenuController extends Controller
          if ($selectedCategoryIdFromDropdown) {
             $selectedCategory = Category::find($selectedCategoryIdFromDropdown);
             if ($selectedCategory) {
-                $paketsQuery->where('category_id', $selectedCategory->nama);
+                $paketsQuery->where('category_id', $selectedCategoryIdFromDropdown);
             }
         }
 
@@ -31,6 +31,36 @@ class MenuController extends Controller
 
         return view('order', compact('day', 'pakets', 'categories', 'selectedCategoryIdFromDropdown'));
     }
-
     
+    // New method for Energi Pagi
+    public function showEnergiPagi()
+    {
+        // Change this line to match the capitalization in your categories.nama table
+        // (which is 'Energi Pagi' according to your database insert statement)
+        $targetCategoryName = 'Energi Pagi';
+
+        $category = Category::where('nama', $targetCategoryName)->with('menus')->first();
+
+        // dd($category); // Make sure this line is commented out or removed
+
+        $categoriesWithMenus = collect();
+        if ($category) {
+            $categoriesWithMenus->push($category);
+        }
+
+        return view('categories.Energi-Pagi', compact('categoriesWithMenus'));
+    }
+
+
+public function showMenuPage()
+{
+    // Load categories and their related menus
+    $categoriesWithMenus = Category::with('menus')->get();
+
+    // Return to the view (update with your actual view file name)
+    return view('categories.Energi-Pagi', compact('categoriesWithMenus'));
 }
+
+}
+
+
