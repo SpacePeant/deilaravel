@@ -54,4 +54,7 @@ Route::get('/menu-order', [MenuController::class, 'index'])->name('order');
 
 Route::get('/order', [OrderController::class, 'index'])->name('order.show');
 
-Route::get('/full-grouped-menu', [MenuController::class, 'showGroupedMenu'])->name('grouped');
+
+Route::get('/filterMenu', function () { return view('get_cart'); })->name('filterMenu');
+
+Route::get('/menu/{categoryName}', [MenuController::class, 'showCategoryMenus'])->name('menu.category');

@@ -32,11 +32,5 @@ class MenuController extends Controller
         return view('order', compact('day', 'pakets', 'categories', 'selectedCategoryIdFromDropdown'));
     }
 
-    public function showGroupedMenu()
-    {
-        $categoriesWithMenus = Category::with('menus')->get();
-
-        dd($categoriesWithMenus);
-        return route('grouped', compact('categoriesWithMenus')); // <--- Ensure this matches your file
-    }
+    
 }

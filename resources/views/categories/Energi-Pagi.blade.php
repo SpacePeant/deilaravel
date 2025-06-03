@@ -1,3 +1,32 @@
+<?php
+// This PHP block is necessary here because Route::view directly renders this file.
+// In a typical Laravel MVC architecture, all database logic would reside in a dedicated controller method.
+
+// Use Laravel's Eloquent models to fetch data
+use App\Models\Menu;     // Ensure this model exists and is correctly configured for your 'menu' table
+use App\Models\Category; // Ensure this model exists and is correctly configured for your 'category' table
+
+// Define the specific category name for this page
+$targetCategoryName = 'Energi Pagi'; // This string must exactly match the 'nama' column in your 'category' table for this category
+
+// Find the category by its name and eager load all its associated menus
+// ->with('menus') ensures that related menu items are fetched efficiently
+// ->first() retrieves the first matching category (or null if not found)
+$category = Category::where('nama', $targetCategoryName)->with('menus')->first();
+
+// --- START FIX for Undefined variable $categoriesWithMenus ---
+// Instead of $menuByCategory, we now define $categoriesWithMenus as expected by the loop
+$categoriesWithMenus = collect(); // Initialize as an empty collection
+
+if ($category) {
+    // If the category is found, add it to the collection
+    $categoriesWithMenus->push($category);
+}
+// --- END FIX ---
+
+// No need for explicit database connection closing (e.g., $conn->close()) as Laravel manages this.
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -91,8 +120,9 @@
 
     <div class="container py-4">
         <h1 class="text-center mb-4">Our Menu</h1>
-        
+
         {{-- Loop through categories with their associated menu items --}}
+        {{-- Now using the corrected $categoriesWithMenus variable --}}
         @foreach ($categoriesWithMenus as $category)
             {{-- Only display category title if it has menu items --}}
             @if ($category->menus->isNotEmpty())
