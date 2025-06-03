@@ -96,10 +96,10 @@
 
         {{-- Loop through categories with their associated menu items --}}
         @foreach ($categoriesWithMenus as $category)
-         <?php echo("tai1s"); ?>
+         
             {{-- Only display category title if it has menu items --}}
             @if ($category->menus->isNotEmpty())
-             <?php echo("tai2"); ?>
+             
                 <h2 class="category-title">{{ htmlspecialchars($category->nama) }}</h2>
                 
                 <div class="row">
