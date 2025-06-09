@@ -4,37 +4,36 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 
-class CheckoutController extends Controller
+class DetailController extends Controller
 {
-     public function index()
+    public function index()
 {
-    $cartItems = DB::table('cart as c')
-        ->leftJoin('anak as a', 'a.id', '=', 'c.child_id')
-        ->leftJoin('menu as m', 'm.id', '=', 'c.menu_id')
+    $cartItems = DB::table('orders as o')
+        ->leftJoin('anak as a', 'a.id', '=', 'o.child_id')
+        ->leftJoin('menu as m', 'm.id', '=', 'o.menu_id')
         ->select(
-            'c.cart_id',
+            'o.order_id',
             'a.id as anak_id',
             'a.nama as anak_nama',
             'a.tanggal_lahir',
             'a.tinggi_cm',
             'a.berat_kg',
             'a.gender',
-            'c.day_of_week',
+            'o.day_of_week',
             'm.id as menu_id',
             'm.nama as menu_nama',
-            'c.options',
-            'c.quantity',
-            'c.note',
-            'c.alamat',
-            'c.kalori',
-            'c.jam',
+            'o.options',
+            'o.quantity',
+            'o.note',
+            'o.alamat',
+            'o.kalori',
+            'o.jam',
             'm.harga',
             'm.gambar'
         )
         ->orderBy('a.nama')
-        ->orderBy('c.day_of_week')
+        ->orderBy('o.day_of_week')
         ->orderBy('m.nama')
         ->get();
 
@@ -70,7 +69,7 @@ class CheckoutController extends Controller
             'jam' => $item->jam,
             'harga' => $item->harga,
             'gambar' => $item->gambar,
-            'cart_id' => $item->cart_id
+            'order_id' => $item->order_id
         ];
 
         // Tambahkan kalori ke total harian
@@ -93,54 +92,10 @@ class CheckoutController extends Controller
         }
     }
 
-    $totalHarga = DB::table('cart as c')
-        ->leftJoin('menu as m', 'm.id', '=', 'c.menu_id')
-        ->select(DB::raw('SUM(c.quantity * m.harga) as total'))
-        ->value('total');
+    
 
-    return view('checkout', [
-        'groupedCart' => $grouped,
-        'totalHarga' => $totalHarga ?? 0
+    return view('details', [
+        'groupedCart' => $grouped
     ]);
-}
-public function checkoutAll()
-{
-    // Ambil semua data cart
-    $cartItems = DB::table('cart')->get();
-
-    if ($cartItems->isEmpty()) {
-        return response()->json(['success' => false, 'message' => 'Cart kosong']);
-    }
-
-    // Hitung total harga semua cart (quantity * harga menu)
-    $totalHarga = DB::table('cart as c')
-        ->join('menu as m', 'm.id', '=', 'c.menu_id')
-        ->sum(DB::raw('c.quantity * m.harga'));
-
-    // Insert ke tabel od (order) dan dapatkan od_id
-    $od_id = DB::table('od')->insertGetId([
-        'total' => $totalHarga,
-    ]);
-
-    // Masukkan semua cart ke orders
-    foreach ($cartItems as $item) {
-        DB::table('orders')->insert([
-            'child_id' => $item->child_id,
-            'day_of_week' => $item->day_of_week,
-            'menu_id' => $item->menu_id,
-            'options' => $item->options,
-            'quantity' => $item->quantity,
-            'note' => $item->note,
-            'alamat' => $item->alamat,
-            'kalori' => $item->kalori,
-            'jam' => $item->jam ?? now(),
-            'od_id' => $od_id,
-        ]);
-    }
-
-    // Kosongkan tabel cart seluruhnya
-    DB::table('cart')->delete();
-
-    return response()->json(['success' => true, 'message' => 'Checkout berhasil', 'order_id' => $od_id]);
 }
 }

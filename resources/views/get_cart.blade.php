@@ -321,6 +321,14 @@
     .back-button:hover {
       background-color: #218838;
     }
+    .filters{
+      margin : 0px 50px;
+    }
+    h2{
+margin-top: 80px;
+margin-bottom: 50px;
+      text-align: center;
+    }
 
   </style>
 </head>
@@ -328,13 +336,14 @@
   
   <body>
   @include('includes.header')
-  <a href="javascript:history.back()" class="back-button">← Back</a>
+  
 
-<h2>Paket Menu</h2>
+  <h2>Paket Menu</h2>
 
 <!-- Filter Buttons -->
 <!-- Filter Buttons -->
 <div class="filters mb-4">
+
     <button class="filter-btn active" data-filter="all">Semua</button>
     @foreach ($categories as $category)
         <button class="filter-btn" data-filter="{{ $category->id }}">

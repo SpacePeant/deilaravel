@@ -408,7 +408,7 @@ updateCheckoutButton();
             return false;
         }
 
-        let paymentUrl = '{{ route("checkout") }}' + '?id=' + childId + '&name=' + encodeURIComponent(childName);
+        let paymentUrl = '{{ route("checkout") }}';
 window.location.href = paymentUrl;
 
     }
@@ -494,7 +494,7 @@ hapusAnakJikaHariKosong();
         }
            const kaloriSpan = document.getElementById(`total-kalori-hari-ini-${data.anakId}-${data.hari.toLowerCase()}`);
 if (kaloriSpan) {
-    kaloriSpan.textContent = `${data.kaloriTotal} / ${data.kalori_ideal} Kalori`;
+    kaloriSpan.textContent = `${data.kaloriTotal} / ${data.kaloriIdeal} Kalori`;
 }
             } else {
                 alert('Gagal update quantity: ' + (data.message || 'Unknown error'));

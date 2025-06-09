@@ -430,15 +430,15 @@ p {
     margin: 0 auto;
     text-align: center;
 }
-.container{
+.containerr{
     margin-bottom: 80px;
 }
     </style>
 </head>
 <body>
-    @include('includes.header')
+     @include('includes.header')
     <div class="containerr">
-    @if (empty($groupedCart) || count($groupedCart) === 0)
+        @if (empty($groupedCart) || count($groupedCart) === 0)
         <div class="empty-message">
             Belum ada pesanan.
         </div>
@@ -463,7 +463,7 @@ p {
                                 @php
                                     $options = is_array($menu['options']) ? $menu['options'] : json_decode($menu['options'], true) ?? [];
                                 @endphp
-                                <div class="menu-card" data-cart-id="{{ $menu['cart_id'] }}">
+                                <div class="menu-card" data-cart-id="{{ $menu['order_id'] }}">
                                     <div class="menu-image-container">
                                         <img src="{{ asset('images/' . ($menu['gambar'] ?? 'default.png')) }}" alt="{{ $menu['menu_nama'] }}">
                                     </div>
@@ -492,7 +492,7 @@ p {
                                         @endif
 
                                         <div class="quantity-control">
-                                                                                        <span class="qty" id="qty-{{ $menu['cart_id'] }}">{{ $menu['quantity'] }}x</span>
+                                                                                        <span class="qty" id="qty-{{ $menu['order_id'] }}">{{ $menu['quantity'] }}x</span>
                                         </div>
 
                                     </div>
@@ -507,277 +507,6 @@ p {
             @endforeach
         @endforeach
     @endif
-
-    <div class="container mt-4" id="pem">
-    <div class="summary-card">
-        <div class="summary-title">Ringkasan Pembayaran</div>
-        <div class="summary-text">Total yang harus dibayar:</div>
-        <div class="summary-total">
-            <span id="totalAmount">Rp {{ number_format($totalHarga ?? 0, 0, ',', '.') }}</span>
-        </div>
     </div>
-</div>
-</div>
-<div class="checkout-bar">
-    <div class="checkout-content">
-        <span class="total-label">Total:</span>
-        <span id="totalAmount">Rp {{ number_format($totalHarga ?? 0, 0, ',', '.') }}</span>
-        <button type="button" id="submitPayment" class="checkout-button">
-    Bayar Sekarang
-</button>
-    </div>
-</div>
-
-<!-- Success Pop-up -->
-<div id="successPopup" class="popup" style="display:none;">
-    <div class="popup-content">
-        <span class="checkmark">&#10004;</span>
-        <h2>Order Berhasil!</h2>
-        <p>Terima kasih telah berbelanja!</p>
-        <div class="popup-buttons">
-            <a href="{{ route('detail') }}" class="see-order-details btn btn-primary">Lihat Rincian Pesanan</a>
-            <a href="{{ route('home') }}" class="back-home btn btn-secondary">Kembali ke Beranda</a> 
-        </div>
-    </div>
-</div>
-
-<div class="container">
-    <h2>Pilih Metode Pembayaran</h2>
-        <form id="paymentForm" action="{{ route('checkout.all') }}" method="POST">
-        @csrf
-        <div class="grid">
-
-           @php
-    $payments = [
-        ['value' => 'bca', 'img' => asset('images/BCA1.png'), 'name' => 'Bank BCA'],
-        ['value' => 'mandiri', 'img' => asset('images/logo-mandiri.png'), 'name' => 'Bank Mandiri'],
-        ['value' => 'bri', 'img' => asset('images/BRI1.png'), 'name' => 'Bank BRI'],
-        ['value' => 'bni', 'img' => asset('images/BNI1.png'), 'name' => 'Bank BNI'],
-        ['value' => 'qris', 'img' => asset('images/QRIS1.png'), 'name' => 'QRIS'],
-        ['value' => 'shopeepay', 'img' => asset('images/Shopeepay1.png'), 'name' => 'ShopeePay'],
-        ['value' => 'gopay', 'img' => asset('images/gopay.png'), 'name' => 'GoPay'],
-        ['value' => 'ovo', 'img' => asset('images/OVO1.png'), 'name' => 'OVO'],
-        ['value' => 'dana', 'img' => asset('images/dana1.png'), 'name' => 'Dana'],
-    ];
-@endphp
-
-
-            @foreach ($payments as $index => $payment)
-                <label class="payment-option">
-                    <input 
-                        type="radio" 
-                        name="payment_method" 
-                        value="{{ $payment['value'] }}" 
-                        {{ $index === 0 ? 'checked' : '' }}>
-                    <img src="{{ asset($payment['img']) }}" alt="{{ $payment['name'] }}">
-                    <span>{{ $payment['name'] }}</span>
-                </label>
-            @endforeach
-
-        </div>
-    </form>
-</div>
-<script>
-document.getElementById('submitPayment').addEventListener('click', function () {
-    const form = document.getElementById('paymentForm');
-    const formData = new FormData(form);
-
-    fetch(form.action, {
-        method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        },
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            // Tampilkan popup sukses
-            const popup = document.getElementById('successPopup');
-            popup.style.display = 'block';
-
-            // (Opsional) Tampilkan data tambahan jika mau
-            console.log("Pesanan ID:", data.order_id);
-        } else {
-            alert('Checkout gagal: ' + (data.message || 'Terjadi kesalahan.'));
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Terjadi kesalahan saat mengirim permintaan.');
-    });
-});
-</script>
-{{-- Jangan lupa script JS, bisa kamu pindahkan ke file .js --}}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    function updateCheckoutButton() {
-    const totalAmountSpan = document.getElementById('totalAmount');
-    const checkoutButton = document.querySelector('.checkout-button');
-
-    // Ambil nilai total, hilangkan 'Rp' dan titik ribuan, lalu parse ke number
-    let totalText = totalAmountSpan.textContent || '';
-    totalText = totalText.replace(/[^0-9]/g, ''); // hapus selain angka
-    const total = parseInt(totalText, 10) || 0;
-
-    if (total > 0) {
-        checkoutButton.disabled = false;
-        checkoutButton.classList.remove('disabled'); // buat gaya khusus kalau mau
-    } else {
-        checkoutButton.disabled = true;
-        checkoutButton.classList.add('disabled'); // buat gaya khusus kalau mau
-    }
-}
-
-// Panggil fungsi ini setelah update total harga
-updateCheckoutButton();
-    $('.lihat-detail').on('click', function () {
-        const day = $(this).data('day');
-        $('#detail-' + day).slideToggle();
-    });
-
-    // JS quantity update dan checkout bisa diimplementasikan sesuai kebutuhan Laravel API endpoint
-
-    function checkout() {
-        let totalAmount = {{ $totalHarga }};
-        let childId = {{ session('selected_child_id', 'null') }};
-        let childName = {!! json_encode(session('selected_child_name', '')) !!};
-
-        if (totalAmount === 0) {
-            alert('Belum ada makanan yang di pesan');
-            return false;
-        }
-
-        let paymentUrl = '{{ url('payment') }}' + '?id=' + childId + '&name=' + encodeURIComponent(childName);
-        window.location.href = paymentUrl;
-    }
-</script>
-
-
-<script>
-    function hapusAnakJikaHariKosong() {
-    const container = document.querySelector('.container');
-    if (!container) return;
-
-    const anakHeaders = container.querySelectorAll('h2');
-    anakHeaders.forEach((h2, index) => {
-        let nextElem = h2.nextElementSibling;
-        let adaDayCard = false;
-
-        while (nextElem && nextElem.tagName.toLowerCase() !== 'h2') {
-            if (nextElem.classList.contains('day-card')) {
-                adaDayCard = true;
-                break;
-            }
-            nextElem = nextElem.nextElementSibling;
-        }
-
-        if (!adaDayCard) {
-            h2.remove();
-        }
-    });
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-    // Ambil token csrf dari meta tag
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-    function updateQuantity(cartId, delta) {
-        fetch('/cart/update-quantity', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': csrfToken
-            },
-            body: JSON.stringify({ cart_id: cartId, delta: delta })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                if (data.quantity > 0) {
-                    // Update tampilan quantity
-                    const qtySpan = document.getElementById('qty-' + cartId);
-                    if (qtySpan) {
-                        qtySpan.textContent = data.quantity;
-                    }
-                } else {
-                    // Quantity 0: hapus menu dari DOM
-                    const menuCard = document.querySelector(`.menu-card[data-cart-id="${cartId}"]`);
-                    if (menuCard) {
-                        // Simpan referensi elemen yang akan dicek setelah hapus
-                        const dayContainer = menuCard.closest('.menu-container');
-                        const dayCard = menuCard.closest('.day-card');
-                        const anak = dayCard ? dayCard.previousElementSibling ? dayCard.previousElementSibling.textContent : null : null;
-
-                        menuCard.remove();
-
-                        
-
-                        // Jika menu-container sudah kosong, hapus day-card juga
-                        if (dayContainer && dayContainer.children.length === 0) {
-                            // Hapus day-card
-                            if (dayCard) {
-                                const anakHeader = dayCard.previousElementSibling; // <h2>Anak: ...</h2> mungkin ada di atas day-card
-                                dayCard.remove();
-hapusAnakJikaHariKosong();
-                                // Cek apakah masih ada day-card untuk anak tersebut
-                                
-                            }
-                        }
-                    }
-                }
-                const totalAmountSpan = document.getElementById('totalAmount');
-        if (totalAmountSpan) {
-            // Format harga pakai toLocaleString Indonesia
-            totalAmountSpan.textContent = 'Rp ' + Number(data.totalHarga).toLocaleString('id-ID');
-        }
-            } else {
-                alert('Gagal update quantity: ' + (data.message || 'Unknown error'));
-            }
-        })
-        .catch(err => {
-            alert('Error saat update quantity');
-            console.error(err);
-        });
-    }
-
-    // Pasang event listener tombol plus
-    document.querySelectorAll('.qty-btn.plus').forEach(button => {
-        button.addEventListener('click', function () {
-            const cartId = this.dataset.cartId;
-            updateQuantity(cartId, 1);
-        });
-    });
-
-    // Pasang event listener tombol minus
-    document.querySelectorAll('.qty-btn.minus').forEach(button => {
-        button.addEventListener('click', function () {
-            const cartId = this.dataset.cartId;
-            updateQuantity(cartId, -1);
-        });
-    });
-});
-
-</script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const form = document.getElementById("paymentForm");
-        const payNowBtn = document.getElementById("payNowBtn");
-        const popup = document.getElementById("successPopup");
-
-        form.addEventListener("submit", function (e) {
-            e.preventDefault(); // Cegah submit langsung
-
-            // Tampilkan pop-up sukses
-            popup.style.display = "block";
-
-            // Submit form setelah delay (misalnya 2 detik)
-            setTimeout(() => {
-                form.submit(); // Form tetap terkirim
-            }, 2000);
-        });
-    });
-</script>
-
 </body>
 </html>

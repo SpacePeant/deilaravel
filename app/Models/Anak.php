@@ -17,7 +17,7 @@ class Anak extends Model
     'alergi',
 
 ];
-public function carts()
+public function cart()
     {
         return $this->hasMany(Cart::class, 'child_id');
     }

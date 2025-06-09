@@ -10,14 +10,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+     @include('includes.header')
     <section class="food-cart">
         <h2>Paket Menu</h2>
 
-        <div class="backbutt">
-            <a href="{{ route('home') }}">
-                <button>Back</button>
-            </a>
-        </div>
+        
 
         {{-- <h2>Hari yang dipilih: {{ $day }}</h2> --}}
 

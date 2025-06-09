@@ -10,10 +10,14 @@ use Illuminate\Support\Facades\DB;
 class AnakController extends Controller
 {
     public function index()
-    {
-        $children = Anak::all();
-        return view('anak', compact('children'));
-    }
+{
+    $children = DB::table('anak')
+        ->where('hapus', false)
+        ->get(); // ini baru data koleksi anak yang belum dihapus
+
+    return view('anak', compact('children'));
+}
+
 
     public function pilih()
 {
@@ -28,7 +32,10 @@ class AnakController extends Controller
 
     public function show($id)
     {
-        $child = DB::table('anak')->where('id', $id)->first(); // ✅ this returns an object
+        $child = DB::table('anak')
+    ->where('id', $id)
+    ->where('hapus', false)  // hanya yang belum dihapus
+    ->first(); // ✅ this returns an object
 
         if (!$child) {
             abort(404, 'Data anak tidak ditemukan');
@@ -47,14 +54,23 @@ class AnakController extends Controller
 
         return view('child', compact('child', 'umur', 'kalori', 'protein', 'imgSrc'));
     }
+    
 
 
     public function destroy($id)
-    {
-        DB::table('anak')->where('id', $id)->delete();
+{
+    // Update kolom hapus jadi true
+    $updated = DB::table('anak')
+        ->where('id', $id)
+        ->update(['hapus' => true]);
 
-        return redirect()->route('anak')->with('success', 'Data anak berhasil dihapus.');
+    if ($updated) {
+        return redirect()->route('anak')->with('success', 'Data anak berhasil dihapus (soft delete).');
+    } else {
+        return redirect()->route('anak')->with('error', 'Data anak gagal dihapus.');
     }
+}
+    
     
     public function store(Request $request)
     {

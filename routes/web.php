@@ -19,7 +19,7 @@ Route::get('/anak', [AnakController::class, 'index'])->name('anak');
 
 
 Route::get('/anak/detail/{id}', [AnakController::class, 'show'])->name('anak.show');
-Route::post('/anak/delete/{id}', [AnakController::class, 'destroy'])->name('anak.destroy');
+Route::delete('/anak/{id}', [AnakController::class, 'destroy'])->name('anak.destroy');
 Route::post('/anak', [AnakController::class, 'store'])->name('anak.store');
 
 
@@ -67,8 +67,10 @@ Route::get('/menu', [OrderController::class, 'index'])->name('order');
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\DetailController;
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::post('/cart/update-quantity', [CartController::class, 'updateQuantity']);
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 Route::post('/checkout-all', [CheckoutController::class, 'checkoutAll'])->name('checkout.all');
+Route::get('/detail', [DetailController::class, 'index'])->name('detail');
